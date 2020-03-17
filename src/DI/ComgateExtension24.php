@@ -3,6 +3,7 @@
 namespace Contributte\Comgate\DI;
 
 use Contributte\Comgate\Comgate;
+use Contributte\Comgate\Gateway\PaymentMethodsService;
 use Contributte\Comgate\Gateway\PaymentService;
 use Contributte\Comgate\Http\HttpClient;
 use GuzzleHttp\Client;
@@ -42,6 +43,11 @@ class ComgateExtension24 extends CompilerExtension
 
 		$builder->addDefinition($this->prefix('gateway.payment'))
 			->setFactory(PaymentService::class, [
+				$this->prefix('@http.client'),
+			]);
+
+		$builder->addDefinition($this->prefix('gateway.methods'))
+			->setFactory(PaymentMethodsService::class, [
 				$this->prefix('@http.client'),
 			]);
 	}
